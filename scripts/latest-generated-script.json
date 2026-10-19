@@ -1,0 +1,120 @@
+{
+  "title": "楽しく学ぶ、Windows再インストール",
+  "aspectRatio": "9:16",
+  "rules": {
+    "fps": 60,
+    "themePreset": "clean-saas",
+    "fontFamily": "PlusJakartaSans",
+    "physics": "bouncy",
+    "backgroundStyle": "grid-mesh",
+    "glowIntensity": 0.7,
+    "enableVoiceover": true,
+    "voiceProfile": "default",
+    "language": "ja",
+    "masterAudioFile": "audio/uploaded-sample.mp3"
+  },
+  "scenes": [
+    {
+      "type": "intro",
+      "id": "scene-1",
+      "durationInSeconds": 3.5,
+      "transition": "slide",
+      "badgeText": "かんたんガイド",
+      "headline": "Windowsをすっきり再インストール！",
+      "highlightWord": "すっきり",
+      "subheadline": "準備から初期設定まで、20秒で案内",
+      "icon": "Sparkles",
+      "voiceoverText": "よし、再インストールを楽しく始めましょう！",
+      "audioFile": "audio/uploaded-sample.mp3",
+      "audioDuration": 0
+    },
+    {
+      "type": "kinetic-text",
+      "id": "scene-2",
+      "durationInSeconds": 3.5,
+      "transition": "slide",
+      "badgeText": "",
+      "headline": "まずは大切なデータをバックアップ",
+      "highlightWords": [
+        "Faster",
+        "Smarter"
+      ],
+      "body": "Transform raw concepts into broadcast-grade motion graphics in minutes.",
+      "voiceoverText": "大事なファイルは、先に必ず保存！",
+      "audioFile": "",
+      "audioDuration": 0
+    },
+    {
+      "type": "feature-grid",
+      "id": "scene-3",
+      "durationInSeconds": 3.5,
+      "transition": "slide",
+      "badgeText": "CORE CAPABILITIES",
+      "headline": "インストール用USBを作成",
+      "subheadline": "Deep modular architecture with declarative motion rules",
+      "features": [
+        {
+          "icon": "Zap",
+          "title": "Script Driven",
+          "description": "Edit JSON or props to re-generate video instantaneously.",
+          "tag": "Declarative"
+        },
+        {
+          "icon": "Layers",
+          "title": "Deep Modules",
+          "description": "Modular scenes, reusable layout components, and dynamic frame orchestrators.",
+          "tag": "Robust"
+        },
+        {
+          "icon": "Cpu",
+          "title": "60 FPS Native",
+          "description": "Tuned spring physics and zero dropped frames.",
+          "tag": "Silky"
+        },
+        {
+          "icon": "Gauge",
+          "title": "Instant Export",
+          "description": "Render to MP4 with Remotion CLI or preview in Studio.",
+          "tag": "Automated"
+        }
+      ],
+      "voiceoverText": "公式ツールで、インストールUSBを作ります。",
+      "audioFile": "",
+      "audioDuration": 0
+    },
+    {
+      "type": "kinetic-text",
+      "id": "scene-4",
+      "durationInSeconds": 3.5,
+      "transition": "slide",
+      "badgeText": "",
+      "headline": "USBから起動してインストール",
+      "highlightWords": [
+        "Faster",
+        "Smarter"
+      ],
+      "body": "Transform raw concepts into broadcast-grade motion graphics in minutes.",
+      "voiceoverText": "USBから起動し、画面の案内に従って。",
+      "audioFile": "",
+      "audioDuration": 0
+    },
+    {
+      "type": "outro",
+      "id": "scene-5",
+      "durationInSeconds": 3.5,
+      "transition": "slide",
+      "badgeText": "GET STARTED TODAY",
+      "headline": "初期設定して、完了！",
+      "subheadline": "バックアップを戻して、Windowsを使い始めよう",
+      "ctaText": "npx remotion studio",
+      "url": "support.microsoft.com/windows",
+      "socials": [
+        "@remotion",
+        "remotion.dev"
+      ],
+      "voiceoverText": "準備よし！公式手順も確認してくださいね。",
+      "audioFile": "",
+      "audioDuration": 0
+    }
+  ]
+}

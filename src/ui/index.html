@@ -1,0 +1,2207 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MotionForge Studio • AI 60 FPS Motion Graphics</title>
+  
+  <!-- Modern Typography (Plus Jakarta Sans + JetBrains Mono) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ============================================================
+       DESIGN SYSTEM (ui-ux-pro-max standard: Soft UI Evolution Dark)
+       ============================================================ */
+    :root {
+      --color-bg-base: #07090E;
+      --color-bg-surface: #0E131F;
+      --color-bg-elevated: #161D2E;
+      --color-bg-card: rgba(14, 19, 31, 0.75);
+      --color-bg-card-hover: rgba(22, 29, 46, 0.85);
+      
+      --color-border-subtle: rgba(255, 255, 255, 0.08);
+      --color-border-hover: rgba(255, 255, 255, 0.16);
+      --color-border-active: rgba(99, 102, 241, 0.5);
+      --color-border-cyan: rgba(0, 240, 255, 0.4);
+      
+      --color-primary: #6366F1;
+      --color-primary-glow: rgba(99, 102, 241, 0.3);
+      --color-cyan: #00F0FF;
+      --color-cyan-glow: rgba(0, 240, 255, 0.25);
+      --color-emerald: #10B981;
+      --color-emerald-glow: rgba(16, 185, 129, 0.25);
+      --color-amber: #F59E0B;
+      --color-rose: #F43F5E;
+      
+      --color-text-main: #F8FAFC;
+      --color-text-muted: #94A3B8;
+      --color-text-faint: #64748B;
+      
+      --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --radius-full: 9999px;
+      
+      --shadow-card: 0 16px 36px -8px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--color-border-subtle);
+      --shadow-glow: 0 0 24px -4px var(--color-cyan-glow);
+      --transition-standard: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--color-bg-base);
+      background-image: 
+        radial-gradient(circle at 12% 10%, rgba(99, 102, 241, 0.12) 0%, transparent 45%),
+        radial-gradient(circle at 88% 90%, rgba(0, 240, 255, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(14, 19, 31, 0.5) 0%, transparent 100%);
+      color: var(--color-text-main);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    /* Accessibility Focus Ring */
+    :focus-visible {
+      outline: 2px solid var(--color-cyan);
+      outline-offset: 2px;
+    }
+
+    /* SVG Utility */
+    .icon {
+      width: 18px;
+      height: 18px;
+      stroke-width: 2;
+      stroke: currentColor;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+
+    /* ============================================================
+       TOP NAVIGATION BAR
+       ============================================================ */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 32px;
+      background: rgba(7, 9, 14, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--color-border-subtle);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-sm);
+      background: linear-gradient(135deg, var(--color-cyan), var(--color-primary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #07090E;
+      box-shadow: 0 0 16px var(--color-cyan-glow);
+    }
+
+    .brand-name {
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge-fps {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--color-cyan);
+      background: rgba(0, 240, 255, 0.1);
+      border: 1px solid rgba(0, 240, 255, 0.25);
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      letter-spacing: 0.05em;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .system-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12.5px;
+      color: var(--color-text-muted);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--color-border-subtle);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+    }
+
+    .status-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--color-emerald);
+      box-shadow: 0 0 8px var(--color-emerald);
+    }
+
+    .btn-studio-link {
+      background: rgba(99, 102, 241, 0.12);
+      border: 1px solid var(--color-border-active);
+      color: #C7D2FE;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 40px;
+      cursor: pointer;
+      transition: var(--transition-standard);
+    }
+
+    .btn-studio-link:hover {
+      background: rgba(99, 102, 241, 0.25);
+      color: #FFFFFF;
+      border-color: #818CF8;
+      box-shadow: 0 4px 16px rgba(99, 102, 241, 0.25);
+      transform: translateY(-1px);
+    }
+
+    /* ============================================================
+       MAIN LAYOUT
+       ============================================================ */
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 500px 1fr;
+      gap: 28px;
+      padding: 28px 32px;
+      max-width: 1680px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    @media (max-width: 1180px) {
+      main {
+        grid-template-columns: 1fr;
+        padding: 20px;
+      }
+    }
+
+    /* PANEL CARDS */
+    .panel-card {
+      background: var(--color-bg-card);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--color-border-subtle);
+      padding-bottom: 14px;
+    }
+
+    .panel-title {
+      font-size: 15.5px;
+      font-weight: 700;
+      color: var(--color-text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* FORM GROUPS */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-text-main);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .form-hint {
+      font-size: 11.5px;
+      color: var(--color-text-faint);
+      font-weight: 400;
+    }
+
+    /* TEXTAREA */
+    .prompt-textarea {
+      width: 100%;
+      min-height: 110px;
+      background: rgba(7, 9, 14, 0.6);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      color: var(--color-text-main);
+      font-family: inherit;
+      font-size: 13.5px;
+      line-height: 1.5;
+      resize: vertical;
+      transition: var(--transition-standard);
+    }
+
+    .prompt-textarea:hover {
+      border-color: var(--color-border-hover);
+    }
+
+    .prompt-textarea:focus {
+      border-color: var(--color-cyan);
+      background: rgba(7, 9, 14, 0.85);
+      box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.12);
+    }
+
+    /* SUGGESTION CHIPS */
+    .chips-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .prompt-chip {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--color-border-subtle);
+      color: var(--color-text-muted);
+      font-size: 11.5px;
+      font-weight: 500;
+      padding: 5px 10px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition-standard);
+      min-height: 28px;
+    }
+
+    .prompt-chip:hover {
+      background: rgba(99, 102, 241, 0.15);
+      border-color: var(--color-border-active);
+      color: #E0E7FF;
+      transform: translateY(-1px);
+    }
+
+    /* VOICE UPLOAD & LIVE MIC RECORDING */
+    .voice-control-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .voice-actions-bar {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-voice-mode {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--color-border-subtle);
+      color: var(--color-text-muted);
+      font-family: inherit;
+      font-size: 12.5px;
+      font-weight: 600;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      min-height: 38px;
+      transition: var(--transition-standard);
+    }
+
+    .btn-voice-mode.active {
+      background: rgba(99, 102, 241, 0.18);
+      border-color: var(--color-primary);
+      color: #FFFFFF;
+    }
+
+    .dropzone {
+      background: rgba(7, 9, 14, 0.45);
+      border: 2px dashed rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+      transition: var(--transition-standard);
+    }
+
+    .dropzone:hover, .dropzone.dragover {
+      border-color: var(--color-cyan);
+      background: rgba(0, 240, 255, 0.04);
+    }
+
+    .dropzone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
+    .dropzone-label {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--color-text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .dropzone-sub {
+      font-size: 11px;
+      color: var(--color-text-faint);
+      margin-top: 2px;
+    }
+
+    /* Live Recording Box */
+    .record-box {
+      display: none;
+      background: rgba(7, 9, 14, 0.6);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      text-align: center;
+    }
+
+    .btn-record-mic {
+      background: rgba(244, 63, 94, 0.15);
+      border: 1px solid rgba(244, 63, 94, 0.4);
+      color: #FDA4AF;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 8px 18px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 40px;
+      transition: var(--transition-standard);
+    }
+
+    .btn-record-mic.recording {
+      background: var(--color-rose);
+      color: #07090E;
+      animation: pulseRecord 1.2s infinite;
+    }
+
+    @keyframes pulseRecord {
+      0% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.6); }
+      70% { box-shadow: 0 0 0 10px rgba(244, 63, 94, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0); }
+    }
+
+    /* Audio Active Preview Card */
+    .audio-card {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(0, 240, 255, 0.08);
+      border: 1px solid rgba(0, 240, 255, 0.25);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+    }
+
+    .audio-card-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12.5px;
+      color: var(--color-cyan);
+      font-weight: 600;
+    }
+
+    .btn-icon-danger {
+      background: none;
+      border: none;
+      color: var(--color-rose);
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition-standard);
+    }
+
+    .btn-icon-danger:hover {
+      background: rgba(244, 63, 94, 0.15);
+    }
+
+    /* SELECT DROPDOWN */
+    .custom-select {
+      width: 100%;
+      background: rgba(7, 9, 14, 0.7);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      color: var(--color-text-main);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      min-height: 42px;
+      transition: var(--transition-standard);
+    }
+
+    .custom-select:hover {
+      border-color: var(--color-border-hover);
+    }
+
+    .custom-select:focus {
+      border-color: var(--color-cyan);
+      box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.12);
+    }
+
+    .custom-select option {
+      background: #0E131F;
+      color: #FFFFFF;
+      padding: 8px;
+    }
+
+    /* SEGMENTED CONTROL */
+    .segmented-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      background: rgba(7, 9, 14, 0.6);
+      padding: 4px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--color-border-subtle);
+    }
+
+    .segment-item {
+      background: transparent;
+      border: none;
+      color: var(--color-text-muted);
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 8px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      min-height: 44px;
+      transition: var(--transition-standard);
+    }
+
+    .segment-item:hover {
+      color: var(--color-text-main);
+    }
+
+    .segment-item.active {
+      background: rgba(99, 102, 241, 0.25);
+      border: 1px solid rgba(99, 102, 241, 0.5);
+      color: #FFFFFF;
+      box-shadow: 0 2px 8px rgba(99, 102, 241, 0.2);
+    }
+
+    /* THEME CARDS */
+    .themes-flex {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+    }
+
+    .theme-card {
+      background: rgba(7, 9, 14, 0.5);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 8px 4px;
+      text-align: center;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      min-height: 52px;
+      transition: var(--transition-standard);
+    }
+
+    .theme-card:hover {
+      border-color: var(--color-border-hover);
+    }
+
+    .theme-card.active {
+      border-color: var(--color-cyan);
+      background: rgba(0, 240, 255, 0.08);
+    }
+
+    .swatch-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+    }
+
+    .theme-label {
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--color-text-muted);
+    }
+
+    /* PRIMARY GENERATE CTA */
+    .btn-hero-cta {
+      background: linear-gradient(135deg, #00F0FF 0%, #6366F1 50%, #EC4899 100%);
+      background-size: 200% auto;
+      border: none;
+      color: #07090E;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 800;
+      padding: 16px;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      letter-spacing: -0.01em;
+      min-height: 52px;
+      box-shadow: 0 8px 24px rgba(0, 240, 255, 0.35);
+      transition: var(--transition-standard);
+      margin-top: 6px;
+    }
+
+    .btn-hero-cta:hover:not(:disabled) {
+      background-position: right center;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 36px rgba(0, 240, 255, 0.5);
+    }
+
+    .btn-hero-cta:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      filter: grayscale(40%);
+    }
+
+    /* ============================================================
+       RIGHT PANEL - STORYBOARD & VISUAL TIMELINE
+       ============================================================ */
+    .hero-summary-card {
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .meta-headline-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .composition-title {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #FFFFFF;
+    }
+
+    .tags-cluster {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .badge-chip {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--color-border-subtle);
+      color: var(--color-text-muted);
+    }
+
+    .badge-chip.accent {
+      color: var(--color-cyan);
+      background: rgba(0, 240, 255, 0.08);
+      border-color: rgba(0, 240, 255, 0.25);
+    }
+
+    .action-button-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .btn-action-secondary {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--color-border-subtle);
+      color: var(--color-text-main);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 42px;
+      text-decoration: none;
+      transition: var(--transition-standard);
+    }
+
+    .btn-action-secondary:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--color-border-hover);
+    }
+
+    /* EMBEDDED VIDEO PREVIEW CONTAINER */
+    .video-preview-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 14px;
+      background: rgba(7, 9, 14, 0.7);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    .preview-tabs {
+      display: flex;
+      background: rgba(14, 19, 31, 0.85);
+      border-bottom: 1px solid var(--color-border-subtle);
+      padding: 6px 10px;
+      gap: 8px;
+    }
+
+    .preview-tab {
+      background: transparent;
+      border: none;
+      color: var(--color-text-muted);
+      font-family: inherit;
+      font-size: 12.5px;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition-standard);
+    }
+
+    .preview-tab:hover {
+      color: var(--color-text-main);
+    }
+
+    .preview-tab.active {
+      background: rgba(99, 102, 241, 0.2);
+      color: #FFFFFF;
+      border: 1px solid rgba(99, 102, 241, 0.4);
+    }
+
+    .preview-content {
+      width: 100%;
+      min-height: 440px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #000000;
+    }
+
+    .studio-iframe {
+      width: 100%;
+      height: 480px;
+      border: none;
+    }
+
+    .rendered-video {
+      width: 100%;
+      max-height: 440px;
+      object-fit: contain;
+      border-radius: var(--radius-sm);
+    }
+
+    .mp4-notice {
+      color: var(--color-text-muted);
+      font-size: 13px;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    /* TIMELINE CARDS */
+    .timeline-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .timeline-card {
+      background: rgba(14, 19, 31, 0.6);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      display: grid;
+      grid-template-columns: 130px 1fr 44px;
+      gap: 16px;
+      align-items: center;
+      transition: var(--transition-standard);
+    }
+
+    .timeline-card:hover {
+      border-color: var(--color-border-cyan);
+      background: var(--color-bg-card-hover);
+      transform: translateX(3px);
+    }
+
+    .card-meta-col {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .scene-pill {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--color-cyan);
+      background: rgba(0, 240, 255, 0.1);
+      padding: 2px 8px;
+      border-radius: 4px;
+      width: fit-content;
+    }
+
+    .scene-frame-count {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--color-text-faint);
+    }
+
+    .card-body-col {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .scene-title-text {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--color-text-main);
+    }
+
+    .scene-voiceover-quote {
+      font-size: 12.5px;
+      color: var(--color-text-muted);
+      font-style: italic;
+      line-height: 1.4;
+    }
+
+    .btn-audio-play {
+      background: rgba(0, 240, 255, 0.1);
+      border: 1px solid rgba(0, 240, 255, 0.25);
+      color: var(--color-cyan);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition-standard);
+    }
+
+    .btn-audio-play:hover {
+      background: var(--color-cyan);
+      color: #07090E;
+      transform: scale(1.08);
+      box-shadow: 0 0 14px var(--color-cyan-glow);
+    }
+
+    /* ============================================================
+       VALIDATION STEP & STORYBOARD REVIEW STYLES
+       ============================================================ */
+    .validation-banner {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(0, 240, 255, 0.05));
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .validation-banner-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .validation-badge-title {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #F59E0B;
+    }
+
+    .validation-tags {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .validation-tag-item {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--color-text-main);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .validation-desc {
+      font-size: 12.5px;
+      color: var(--color-text-muted);
+      line-height: 1.5;
+    }
+
+    .master-audio-box {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .master-audio-title {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #34D399;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .scene-naskah-textarea {
+      width: 100%;
+      background: rgba(7, 9, 14, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      color: #FAFAF9;
+      font-family: inherit;
+      font-size: 12.5px;
+      padding: 8px 10px;
+      line-height: 1.45;
+      resize: vertical;
+      min-height: 48px;
+      transition: var(--transition-standard);
+      margin-top: 4px;
+    }
+
+    .scene-naskah-textarea:focus {
+      outline: none;
+      border-color: #F59E0B;
+      background: rgba(14, 21, 37, 0.85);
+      box-shadow: 0 0 8px rgba(245, 158, 11, 0.2);
+    }
+
+    .validation-cta-box {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(6, 182, 212, 0.08));
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      border-radius: var(--radius-md);
+      padding: 18px 24px;
+      margin-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      box-shadow: 0 4px 30px rgba(16, 185, 129, 0.15);
+    }
+
+    .validation-cta-info h4 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 4px;
+    }
+
+    .validation-cta-info p {
+      font-size: 12px;
+      color: var(--color-text-muted);
+    }
+
+    .btn-approve-render {
+      background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+      color: #042F2E;
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 12px 24px;
+      font-family: inherit;
+      font-size: 13.5px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+      transition: var(--transition-standard);
+    }
+
+    .btn-approve-render:hover {
+      background: linear-gradient(135deg, #34D399 0%, #10B981 100%);
+      color: #022C22;
+      transform: translateY(-2px);
+      box-shadow: 0 0 28px rgba(16, 185, 129, 0.6);
+    }
+
+    .btn-approve-render:active {
+      transform: translateY(0);
+    }
+
+    /* ============================================================
+       LOADING MODAL
+       ============================================================ */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(7, 9, 14, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+
+    .modal-dialog {
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border-cyan);
+      border-radius: var(--radius-lg);
+      padding: 36px 40px;
+      width: 480px;
+      max-width: 90vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 18px;
+      box-shadow: 0 0 60px rgba(0, 240, 255, 0.2);
+    }
+
+    .circular-loader {
+      width: 50px;
+      height: 50px;
+      border: 4px solid rgba(0, 240, 255, 0.15);
+      border-top-color: var(--color-cyan);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .stepper-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+      text-align: left;
+      margin-top: 10px;
+    }
+
+    .stepper-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--color-text-muted);
+    }
+
+    .stepper-item.active {
+      color: var(--color-cyan);
+      font-weight: 700;
+    }
+
+    .stepper-item.done {
+      color: var(--color-emerald);
+    }
+
+    /* REDUCED MOTION */
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP HEADER -->
+  <header>
+    <div class="brand-group">
+      <div class="brand-mark">
+        <svg class="icon" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+      </div>
+      <div>
+        <div class="brand-name">
+          MotionForge Studio
+          <span class="badge-fps">60 FPS</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-actions">
+      <div class="system-status">
+        <span class="status-indicator"></span>
+        <span id="voiceboxStatus">Voicebox TTS Connected</span>
+      </div>
+      <a href="http://localhost:3000" target="_blank" rel="noopener noreferrer" class="btn-studio-link">
+        <svg class="icon" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+        <span>Remotion Studio Player (Port 3000)</span>
+        <svg class="icon" style="width:14px;height:14px" viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17"></path></svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- MAIN STUDIO LAYOUT -->
+  <main>
+    <!-- LEFT PANEL: GENERATOR INPUTS -->
+    <section class="panel-card" aria-labelledby="generatorHeading">
+      <div class="panel-header">
+        <h2 id="generatorHeading" class="panel-title">
+          <svg class="icon" style="color:var(--color-cyan)" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
+          <span>Generator Input Studio</span>
+        </h2>
+      </div>
+
+      <!-- 1. Text Prompt -->
+      <div class="form-group">
+        <label for="promptInput" class="form-label">
+          <span>1. Prompt Ide Video Motion Graphic</span>
+          <span class="form-hint" id="charCounter">0 karakter</span>
+        </label>
+        <textarea 
+          id="promptInput" 
+          class="prompt-textarea" 
+          placeholder="Tuliskan konsep video Anda... Contoh:&#10;Buatkan video motion graphic promosi kopi Cold Brew botol rasa hazelnut, diskon 50%, 60 fps modern dan punchy"
+        ></textarea>
+
+        <!-- Quick Chips -->
+        <div class="chips-row">
+          <button type="button" class="prompt-chip" onclick="applyPresetPrompt('Peluncuran platform AI Agent otonom, highlight fitur 10x lebih cepat, integrasi multi-agent, 60 FPS modern dark')">
+            <svg class="icon" style="width:12px;height:12px" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            <span>SaaS AI Launch</span>
+          </button>
+          <button type="button" class="prompt-chip" onclick="applyPresetPrompt('Promo Diskon 50% Kopi Cold Brew artisan kemasan kaleng, energetic modern, target Gen-Z, 60 FPS')">
+            <svg class="icon" style="width:12px;height:12px" viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3"></path></svg>
+            <span>Cold Brew Promo</span>
+          </button>
+          <button type="button" class="prompt-chip" onclick="applyPresetPrompt('Laporan pertumbuhan startup fintech Q3: 100K active users, 99.8% SLA uptime, 15M GMV, clean SaaS')">
+            <svg class="icon" style="width:12px;height:12px" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+            <span>Growth Metrics</span>
+          </button>
+          <button type="button" class="prompt-chip" onclick="applyPresetPrompt('Video kinetik tipografi tentang seni disiplin dan konsistensi, punchy typography, sunset flare 60fps')">
+            <svg class="icon" style="width:12px;height:12px" viewBox="0 0 24 24"><path d="M4 7V4h16v3M9 20h6M12 4v16"></path></svg>
+            <span>Kinetic Typography</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 2. Voice Input / Live Mic / File Upload -->
+      <div class="form-group">
+        <div class="form-label">
+          <span>2. Sample Voice Note (Opsional)</span>
+          <span class="form-hint" id="voiceStatusHint">Upload file atau rekam suara</span>
+        </div>
+
+        <div class="voice-control-container">
+          <div class="voice-actions-bar">
+            <button type="button" class="btn-voice-mode active" id="btnModeUpload" onclick="setVoiceMode('upload')">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"></path></svg>
+              <span>Upload Audio File</span>
+            </button>
+            <button type="button" class="btn-voice-mode" id="btnModeRecord" onclick="setVoiceMode('record')">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3zM19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8"></path></svg>
+              <span>Rekam Langsung (Mic)</span>
+            </button>
+          </div>
+
+          <!-- Upload Dropzone -->
+          <div class="dropzone" id="dropzoneBox">
+            <input type="file" id="audioFileInput" accept="audio/*">
+            <div class="dropzone-label">
+              <svg class="icon" style="color:var(--color-cyan)" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13M9 9l12-2M6 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM18 19a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path></svg>
+              <span>Tarik file audio atau klik untuk browse</span>
+            </div>
+            <div class="dropzone-sub">Mendukung format WAV, MP3, M4A</div>
+          </div>
+
+          <!-- Live Mic Recorder -->
+          <div class="record-box" id="recordBox">
+            <button type="button" class="btn-record-mic" id="btnToggleRecord" onclick="toggleMicRecording()">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3zM19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8"></path></svg>
+              <span id="recordLabel">Mulai Merekam Suara</span>
+            </button>
+            <div style="font-size: 11.5px; color: var(--color-text-faint);" id="recordTimer">
+              Tekan tombol di atas dan bicarakan ide video Anda
+            </div>
+          </div>
+
+          <!-- Audio Preview Card -->
+          <div class="audio-card" id="audioPreviewCard">
+            <div class="audio-card-left">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13M9 9l12-2M6 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM18 19a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path></svg>
+              <span id="audioDisplayName">voice-sample.wav</span>
+            </div>
+            <button type="button" class="btn-icon-danger" onclick="clearSelectedAudio()" title="Hapus audio">
+              <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. AI Model Selector -->
+      <div class="form-group">
+        <label for="modelSelect" class="form-label">
+          <span>3. Pilih Model AI</span>
+          <span class="form-hint" id="modelPricingBadge">Memuat tarif...</span>
+        </label>
+        <select id="modelSelect" class="custom-select">
+          <option value="">Memuat daftar model AI...</option>
+        </select>
+      </div>
+
+      <!-- 4. Language Selector for Script & Voiceover -->
+      <div class="form-group">
+        <label class="form-label">
+          <span>4. Bahasa Naskah & Voiceover</span>
+          <span class="form-hint">Pilih bahasa cerita</span>
+        </label>
+        <div class="segmented-grid" role="radiogroup" style="grid-template-columns: repeat(3, 1fr);">
+          <button type="button" class="segment-item active" data-lang="id" onclick="changeScriptLanguage('id')">
+            <span style="font-size:12.5px; font-weight:700;">🇮🇩 Indonesia</span>
+            <span style="font-size:9.5px; color:var(--color-text-faint)">Bahasa</span>
+          </button>
+          <button type="button" class="segment-item" data-lang="ja" onclick="changeScriptLanguage('ja')">
+            <span style="font-size:12.5px; font-weight:700;">🇯🇵 日本語</span>
+            <span style="font-size:9.5px; color:var(--color-text-faint)">Japanese</span>
+          </button>
+          <button type="button" class="segment-item" data-lang="en" onclick="changeScriptLanguage('en')">
+            <span style="font-size:12.5px; font-weight:700;">🇺🇸 English</span>
+            <span style="font-size:9.5px; color:var(--color-text-faint)">Global</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 5. Aspect Ratio Selector -->
+      <div class="form-group">
+        <label class="form-label">
+          <span>5. Format & Rasio Video</span>
+        </label>
+        <div class="segmented-grid" role="radiogroup">
+          <button type="button" class="segment-item active" data-ratio="16:9" onclick="changeAspectRatio('16:9')">
+            <span>16:9 Landscape</span>
+            <span style="font-size:10px; color:var(--color-text-faint)">YouTube / TV</span>
+          </button>
+          <button type="button" class="segment-item" data-ratio="9:16" onclick="changeAspectRatio('9:16')">
+            <span>9:16 Vertical</span>
+            <span style="font-size:10px; color:var(--color-text-faint)">Reels / Shorts</span>
+          </button>
+          <button type="button" class="segment-item" data-ratio="1:1" onclick="changeAspectRatio('1:1')">
+            <span>1:1 Square</span>
+            <span style="font-size:10px; color:var(--color-text-faint)">Instagram Feed</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 5. Visual Theme Preset -->
+      <div class="form-group">
+        <label class="form-label">
+          <span>5. Palet Warna & Tema Desain</span>
+        </label>
+        <div class="themes-flex">
+          <button type="button" class="theme-card active" data-theme="cyber-neon" onclick="selectThemePreset('cyber-neon')">
+            <span class="swatch-dot" style="background: #00F0FF; box-shadow: 0 0 6px #00F0FF;"></span>
+            <span class="theme-label">Cyber</span>
+          </button>
+          <button type="button" class="theme-card" data-theme="modern-dark" onclick="selectThemePreset('modern-dark')">
+            <span class="swatch-dot" style="background: #10B981; box-shadow: 0 0 6px #10B981;"></span>
+            <span class="theme-label">Dark</span>
+          </button>
+          <button type="button" class="theme-card" data-theme="luxury-gold" onclick="selectThemePreset('luxury-gold')">
+            <span class="swatch-dot" style="background: #F59E0B; box-shadow: 0 0 6px #F59E0B;"></span>
+            <span class="theme-label">Luxury</span>
+          </button>
+          <button type="button" class="theme-card" data-theme="clean-saas" onclick="selectThemePreset('clean-saas')">
+            <span class="swatch-dot" style="background: #6366F1; box-shadow: 0 0 6px #6366F1;"></span>
+            <span class="theme-label">SaaS</span>
+          </button>
+          <button type="button" class="theme-card" data-theme="sunset-flare" onclick="selectThemePreset('sunset-flare')">
+            <span class="swatch-dot" style="background: #F43F5E; box-shadow: 0 0 6px #F43F5E;"></span>
+            <span class="theme-label">Sunset</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 1 GENERATE CTA -->
+      <button type="button" class="btn-hero-cta" id="btnExecuteGenerate" onclick="triggerAIGeneration()">
+        <svg class="icon" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+        <span>1. Generate Storyboard & Naskah (⚡ Instan)</span>
+      </button>
+
+      <label style="display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: var(--color-text-faint); margin-top: 8px; cursor: pointer; user-select: none;">
+        <input type="checkbox" id="chkAutoVoiceover" style="accent-color: var(--color-cyan); width: 14px; height: 14px; cursor: pointer;" />
+        <span>Auto-generate Voiceover AI semua adegan sekaligus (butuh waktu)</span>
+      </label>
+
+      <!-- RESUME BUTTON -->
+      <button type="button" class="btn-studio-link" id="btnResumeDraft" onclick="resumeLatestScript()" style="width: 100%; justify-content: center; margin-top: 10px; background: rgba(16, 185, 129, 0.12); border-color: rgba(16, 185, 129, 0.35); color: #6EE7B7; font-size: 13.5px; font-weight: 600;">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M8 16H3v5"></path></svg>
+        <span>📂 Resume / Pulihkan Naskah Terakhir</span>
+      </button>
+      <div style="font-size: 11px; color: var(--color-text-faint); text-align: center; margin-top: 6px; line-height: 1.4;">
+        ⚡ <em>Naskah & Storyboard selesai dalam ~2-3 detik. Suara dapat di-generate per adegan atau semua sekaligus.</em>
+      </div>
+    </section>
+
+    <!-- RIGHT PANEL: STORYBOARD TIMELINE & PREVIEWS -->
+    <section class="panel-card" aria-labelledby="storyboardHeading">
+      <div class="hero-summary-card">
+        <div class="meta-headline-row">
+          <h1 class="composition-title" id="activeTitle">Belum ada video yang di-generate</h1>
+          <div class="tags-cluster">
+            <span class="badge-chip accent" id="chipFps">60 FPS Native</span>
+            <span class="badge-chip" id="chipTheme">Cyber Neon</span>
+            <span class="badge-chip" id="chipRatio">16:9 Landscape</span>
+            <span class="badge-chip" id="chipDuration">0 Frames (0.0s)</span>
+          </div>
+        </div>
+
+        <div class="action-button-row">
+          <a href="http://localhost:3000" target="_blank" rel="noopener noreferrer" class="btn-action-secondary">
+            <svg class="icon" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            <span>Tonton Live di Remotion Studio</span>
+          </a>
+          <button type="button" class="btn-action-secondary" id="btnRenderMp4" onclick="renderVideoToMp4()">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"></path><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+            <span id="renderBtnLabel">Render ke MP4 60 FPS</span>
+          </button>
+        </div>
+
+        <!-- EMBEDDED VIDEO & STUDIO PREVIEW AREA -->
+        <div class="video-preview-container" id="videoPreviewContainer">
+          <div class="preview-tabs">
+            <button type="button" class="preview-tab active" id="tabMp4Player" onclick="switchPreviewTab('mp4')">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"></path><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+              <span>Hasil Video MP4</span>
+            </button>
+            <button type="button" class="preview-tab" id="tabRemotionStudio" onclick="switchPreviewTab('studio')">
+              <svg class="icon" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              <span>Remotion Studio Live (60 FPS)</span>
+            </button>
+          </div>
+
+          <!-- Tab 1: Rendered MP4 Video Player -->
+          <div class="preview-content" id="mp4PlayerWrap" style="padding: 16px;">
+            <div id="mp4EmptyNotice" class="mp4-notice">
+              <svg class="icon" style="width:36px;height:36px;margin-bottom:8px;color:var(--color-cyan)" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              <p style="margin-bottom: 12px; font-weight: 600;">Skrip video sudah siap! Klik tombol di bawah untuk merender ke MP4.</p>
+              <button type="button" class="btn-hero-cta" onclick="renderVideoToMp4()" style="min-height: 44px; padding: 10px 24px;">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"></path><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+                <span>Mulai Render MP4 Sekarang (60 FPS)</span>
+              </button>
+            </div>
+            <div id="mp4VideoBox" style="display: none; width: 100%;">
+              <video id="renderedVideoElement" controls autoplay loop playsinline class="rendered-video"></video>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding: 0 4px;">
+                <span id="renderedMetaText" style="font-size: 13px; color: var(--color-cyan); font-weight: 700;">✅ Video MP4 60 FPS Berhasil Dirender!</span>
+                <a id="btnDownloadMp4" href="/out/test-video.mp4" download class="btn-studio-link">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"></path></svg>
+                  <span>Download Video MP4</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 2: Live Studio Iframe -->
+          <div class="preview-content" id="studioIframeWrap" style="display: none;">
+            <iframe id="remotionIframe" src="http://localhost:3000" class="studio-iframe" title="Remotion Live Studio"></iframe>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCENE TIMELINE BREAKDOWN -->
+      <div class="panel-header" style="padding-bottom: 8px;">
+        <h2 id="storyboardHeading" class="panel-title">
+          <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
+          <span>Storyboard Adegan & Voiceover Narasi</span>
+        </h2>
+      </div>
+
+      <div class="timeline-container" id="timelineList">
+        <div style="color: var(--color-text-faint); font-size: 13.5px; text-align: center; padding: 48px 16px;">
+          Ketik ide video Anda di panel kiri lalu klik <strong>Generate Motion Graphic</strong> untuk membuat naskah & suara narasi 60 FPS.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- LOADING PROGRESS MODAL -->
+  <div class="modal-backdrop" id="progressModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-dialog">
+      <div class="circular-loader"></div>
+      <h3 id="modalTitle" style="font-size: 18px; color: #FFFFFF; font-weight: 700;">Membuat Motion Graphic 60 FPS</h3>
+      <p style="font-size: 13px; color: var(--color-text-muted);">Menghubungkan AI Model dan Voicebox Voice Synthesizer...</p>
+
+      <div class="stepper-list">
+        <div class="stepper-item active" id="stepAi">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle></svg>
+          <span>1. Menyusun Skrip Visual & Timing 60 FPS...</span>
+        </div>
+        <div class="stepper-item" id="stepVoice">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle></svg>
+          <span>2. Menyiapkan Suara Narasi & Audio Video...</span>
+        </div>
+        <div class="stepper-item" id="stepSync">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle></svg>
+          <span>3. Sinkronisasi Durasi Frame & Pembaruan Remotion...</span>
+        </div>
+        <div class="stepper-item" id="stepRender">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle></svg>
+          <span>4. Rendering Video MP4 60 FPS (Harap tunggu, render frame-by-frame)...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ============================================================
+       APPLICATION LOGIC & EVENT HANDLERS
+       ============================================================ */
+    let currentAspectRatio = "16:9";
+    let currentThemePreset = "cyber-neon";
+    let currentLanguage = "id"; // Default to Indonesian ("id"), switchable to Japanese ("ja") or English ("en")
+    let activeAudioData = null;
+    let activeAudioFilename = null;
+    let modelCatalog = [];
+    
+    // Live Mic Recording variables
+    let mediaRecorder = null;
+    let recordedChunks = [];
+    let isRecordingMic = false;
+    let recordInterval = null;
+    let recordSeconds = 0;
+
+    window.addEventListener("DOMContentLoaded", async () => {
+      await fetchModelsCatalog();
+      await fetchLatestScriptData();
+
+      // Character count listener
+      const promptInput = document.getElementById("promptInput");
+      const charCounter = document.getElementById("charCounter");
+      promptInput.addEventListener("input", () => {
+        charCounter.textContent = `${promptInput.value.length} karakter`;
+      });
+
+      // File input listener
+      const audioInput = document.getElementById("audioFileInput");
+      audioInput.addEventListener("change", onAudioFileSelected);
+
+      // Drag and drop listeners
+      const dropzone = document.getElementById("dropzoneBox");
+      dropzone.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        dropzone.classList.add("dragover");
+      });
+      dropzone.addEventListener("dragleave", () => {
+        dropzone.classList.remove("dragover");
+      });
+      dropzone.addEventListener("drop", (e) => {
+        e.preventDefault();
+        dropzone.classList.remove("dragover");
+        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+          processAudioFile(e.dataTransfer.files[0]);
+        }
+      });
+    });
+
+    async function fetchModelsCatalog() {
+      try {
+        const response = await fetch("/api/models");
+        const data = await response.json();
+        modelCatalog = data.models || [];
+        const defaultId = data.defaultModel || "gemini-3.8-flash-high";
+
+        const select = document.getElementById("modelSelect");
+        select.innerHTML = "";
+
+        modelCatalog.forEach((m) => {
+          const opt = document.createElement("option");
+          opt.value = m.id;
+          const badge = m.badge ? ` • ${m.badge}` : "";
+          const isDef = m.id === defaultId ? " [DEFAULT .env]" : "";
+          opt.textContent = `${m.name} (${m.id})${badge}${isDef}`;
+          if (m.id === defaultId) opt.selected = true;
+          select.appendChild(opt);
+        });
+
+        updatePricingHint();
+        select.addEventListener("change", updatePricingHint);
+      } catch (err) {
+        console.error("Gagal mengambil model AI:", err);
+      }
+    }
+
+    function updatePricingHint() {
+      const select = document.getElementById("modelSelect");
+      const matched = modelCatalog.find(m => m.id === select.value);
+      const pricingEl = document.getElementById("modelPricingBadge");
+      if (matched) {
+        pricingEl.textContent = `${matched.pricing}`;
+      }
+    }
+
+    function applyPresetPrompt(text) {
+      const input = document.getElementById("promptInput");
+      input.value = text;
+      document.getElementById("charCounter").textContent = `${text.length} karakter`;
+      input.focus();
+    }
+
+    function changeScriptLanguage(lang) {
+      currentLanguage = lang;
+      document.querySelectorAll("[data-lang]").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.lang === lang);
+      });
+    }
+
+    function changeAspectRatio(ratio) {
+      currentAspectRatio = ratio;
+      document.querySelectorAll(".segment-item").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.ratio === ratio);
+      });
+    }
+
+    function selectThemePreset(theme) {
+      currentThemePreset = theme;
+      document.querySelectorAll(".theme-card").forEach(c => {
+        c.classList.toggle("active", c.dataset.theme === theme);
+      });
+    }
+
+    function setVoiceMode(mode) {
+      const btnUpload = document.getElementById("btnModeUpload");
+      const btnRecord = document.getElementById("btnModeRecord");
+      const dropzone = document.getElementById("dropzoneBox");
+      const recordBox = document.getElementById("recordBox");
+
+      if (mode === "upload") {
+        btnUpload.classList.add("active");
+        btnRecord.classList.remove("active");
+        dropzone.style.display = "block";
+        recordBox.style.display = "none";
+      } else {
+        btnRecord.classList.add("active");
+        btnUpload.classList.remove("active");
+        dropzone.style.display = "none";
+        recordBox.style.display = "flex";
+      }
+    }
+
+    function onAudioFileSelected(e) {
+      if (e.target.files && e.target.files[0]) {
+        processAudioFile(e.target.files[0]);
+      }
+    }
+
+    function processAudioFile(file) {
+      activeAudioFilename = file.name;
+      const reader = new FileReader();
+      reader.onload = () => {
+        activeAudioData = reader.result;
+        displayAudioPreview(file.name);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function displayAudioPreview(name) {
+      document.getElementById("audioDisplayName").textContent = name;
+      document.getElementById("audioPreviewCard").style.display = "flex";
+      document.getElementById("dropzoneBox").style.display = "none";
+      document.getElementById("recordBox").style.display = "none";
+    }
+
+    function clearSelectedAudio() {
+      activeAudioData = null;
+      activeAudioFilename = null;
+      document.getElementById("audioFileInput").value = "";
+      document.getElementById("audioPreviewCard").style.display = "none";
+      setVoiceMode(document.getElementById("btnModeUpload").classList.contains("active") ? "upload" : "record");
+    }
+
+    /* Live Microphone Recording */
+    async function toggleMicRecording() {
+      const btn = document.getElementById("btnToggleRecord");
+      const label = document.getElementById("recordLabel");
+      const timer = document.getElementById("recordTimer");
+
+      if (!isRecordingMic) {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          recordedChunks = [];
+          mediaRecorder = new MediaRecorder(stream);
+
+          mediaRecorder.ondataavailable = (e) => {
+            if (e.data.size > 0) recordedChunks.push(e.data);
+          };
+
+          mediaRecorder.onstop = () => {
+            const blob = new Blob(recordedChunks, { type: "audio/webm" });
+            const reader = new FileReader();
+            reader.onload = () => {
+              activeAudioData = reader.result;
+              activeAudioFilename = `mic-record-${Date.now()}.webm`;
+              displayAudioPreview(activeAudioFilename);
+            };
+            reader.readAsDataURL(blob);
+            stream.getTracks().forEach(track => track.stop());
+          };
+
+          mediaRecorder.start();
+          isRecordingMic = true;
+          btn.classList.add("recording");
+          label.textContent = "Hentikan Rekaman";
+          recordSeconds = 0;
+          timer.textContent = "Merekam: 00:00";
+          recordInterval = setInterval(() => {
+            recordSeconds++;
+            const m = String(Math.floor(recordSeconds / 60)).padStart(2, "0");
+            const s = String(recordSeconds % 60).padStart(2, "0");
+            timer.textContent = `Merekam: ${m}:${s}`;
+          }, 1000);
+
+        } catch (err) {
+          alert("Gagal mengakses mikrofon: " + err.message);
+        }
+      } else {
+        if (mediaRecorder && mediaRecorder.state !== "inactive") {
+          mediaRecorder.stop();
+        }
+        isRecordingMic = false;
+        clearInterval(recordInterval);
+        btn.classList.remove("recording");
+        label.textContent = "Mulai Merekam Suara";
+        timer.textContent = "Rekaman selesai diproses!";
+      }
+    }
+
+    /* Trigger AI Generation */
+    async function triggerAIGeneration() {
+      const prompt = document.getElementById("promptInput").value.trim();
+      const model = document.getElementById("modelSelect").value;
+
+      if (!prompt && !activeAudioData) {
+        alert("Silakan ketik prompt ide video atau masukkan file rekaman suara terlebih dahulu!");
+        return;
+      }
+
+      const modal = document.getElementById("progressModal");
+      modal.style.display = "flex";
+      document.getElementById("btnExecuteGenerate").disabled = true;
+
+      const stepAi = document.getElementById("stepAi");
+      const stepVoice = document.getElementById("stepVoice");
+      const stepSync = document.getElementById("stepSync");
+      const stepRender = document.getElementById("stepRender");
+
+      stepAi.className = "stepper-item active";
+      stepVoice.className = "stepper-item";
+      stepSync.className = "stepper-item";
+      if (stepRender) stepRender.className = "stepper-item";
+
+      try {
+        const autoVoiceover = document.getElementById("chkAutoVoiceover")?.checked || false;
+
+        if (autoVoiceover) {
+          setTimeout(() => {
+            stepAi.className = "stepper-item done";
+            stepVoice.className = "stepper-item active";
+          }, 2500);
+          setTimeout(() => {
+            stepVoice.className = "stepper-item done";
+            stepSync.className = "stepper-item active";
+          }, 6000);
+        } else {
+          setTimeout(() => {
+            stepAi.className = "stepper-item done";
+            stepVoice.className = "stepper-item done";
+            stepSync.className = "stepper-item active";
+          }, 1200);
+        }
+
+        const response = await fetch("/api/generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            prompt,
+            model,
+            language: currentLanguage,
+            aspectRatio: currentAspectRatio,
+            themePreset: currentThemePreset,
+            audioBase64: activeAudioData,
+            audioName: activeAudioFilename,
+            autoVoiceover,
+            autoRender: false, // Stop at validation step so user can review & verify VO/naskah!
+          }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || "Gagal membuat skrip motion graphic.");
+        }
+
+        stepSync.className = "stepper-item done";
+
+        setTimeout(() => {
+          modal.style.display = "none";
+          document.getElementById("btnExecuteGenerate").disabled = false;
+          renderStoryboardCards(data.script);
+          
+          // Switch to Remotion Studio preview to see visual storyboard immediately
+          switchPreviewTab("studio");
+
+          // Smooth scroll to Storyboard & Validation review
+          const sbHeading = document.getElementById("storyboardHeading");
+          if (sbHeading) sbHeading.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 600);
+
+      } catch (err) {
+        modal.style.display = "none";
+        document.getElementById("btnExecuteGenerate").disabled = false;
+        const wantsResume = confirm(`Terjadi kendala saat generate: ${err.message}\n\nApakah Anda ingin me-resume / memuat draft naskah terakhir yang sudah tersimpan?`);
+        if (wantsResume) {
+          resumeLatestScript();
+        }
+      }
+    }
+
+    let currentCachedScript = null;
+
+    async function resumeLatestScript() {
+      const btn = document.getElementById("btnResumeDraft");
+      if (btn) btn.disabled = true;
+      try {
+        const res = await fetch("/api/latest");
+        if (!res.ok) {
+          alert("Belum ada naskah tersimpan untuk di-resume.");
+          return;
+        }
+        const script = await res.json();
+        renderStoryboardCards(script);
+
+        // Smooth scroll to storyboard
+        const sbHeading = document.getElementById("storyboardHeading");
+        if (sbHeading) sbHeading.scrollIntoView({ behavior: "smooth", block: "start" });
+
+        alert(`✅ Naskah berhasil dipulihkan: "${script.title}" (${script.scenes?.length || 0} adegan).`);
+      } catch (err) {
+        alert("Gagal me-resume naskah: " + err.message);
+      } finally {
+        if (btn) btn.disabled = false;
+      }
+    }
+
+    async function retryVoiceoverSynthesis() {
+      if (!currentCachedScript) {
+        alert("Pilih atau muat naskah terlebih dahulu!");
+        return;
+      }
+
+      const btn = document.getElementById("btnRetryVoiceover");
+      const label = document.getElementById("labelRetryVoice");
+      if (btn) btn.disabled = true;
+      if (label) label.textContent = "⏳ Memproses Voicebox...";
+
+      const modal = document.getElementById("progressModal");
+      const stepAi = document.getElementById("stepAi");
+      const stepVoice = document.getElementById("stepVoice");
+      const stepSync = document.getElementById("stepSync");
+
+      modal.style.display = "flex";
+      stepAi.className = "stepper-item done";
+      stepVoice.className = "stepper-item active";
+      stepSync.className = "stepper-item";
+
+      try {
+        const res = await fetch("/api/voice/regenerate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            script: currentCachedScript,
+            language: currentLanguage,
+            audioBase64: activeAudioData,
+            audioName: activeAudioFilename,
+          }),
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Gagal membuat voiceover.");
+
+        stepVoice.className = "stepper-item done";
+        stepSync.className = "stepper-item done";
+
+        setTimeout(() => {
+          modal.style.display = "none";
+          renderStoryboardCards(data.script);
+          alert("🎉 Voiceover berhasil dibuat ulang dan disinkronkan ke semua adegan!");
+        }, 500);
+      } catch (err) {
+        modal.style.display = "none";
+        alert("Gagal me-resume voiceover: " + err.message);
+      } finally {
+        if (btn) btn.disabled = false;
+        if (label) label.textContent = "🎙️ Resume / Buat Ulang Voiceover AI";
+      }
+    }
+
+    async function generateSingleSceneVoice(sceneIndex, btnElement) {
+      if (!currentCachedScript || !currentCachedScript.scenes || !currentCachedScript.scenes[sceneIndex]) return;
+
+      const originalHtml = btnElement ? btnElement.innerHTML : "";
+      if (btnElement) {
+        btnElement.disabled = true;
+        btnElement.innerHTML = `<span>⏳ Proses...</span>`;
+      }
+
+      try {
+        const scene = currentCachedScript.scenes[sceneIndex];
+        const res = await fetch("/api/voice/scene", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            sceneIndex,
+            text: scene.voiceoverText,
+            language: currentLanguage,
+            audioBase64: activeAudioData,
+            audioName: activeAudioFilename,
+          }),
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Gagal membuat suara.");
+
+        currentCachedScript = data.script;
+        renderStoryboardCards(currentCachedScript);
+      } catch (err) {
+        alert("Gagal membuat suara adegan: " + err.message);
+        if (btnElement) {
+          btnElement.disabled = false;
+          btnElement.innerHTML = originalHtml;
+        }
+      }
+    }
+
+    async function fetchLatestScriptData() {
+      try {
+        const res = await fetch("/api/latest");
+        if (res.ok) {
+          const script = await res.json();
+          renderStoryboardCards(script);
+        }
+
+        // Auto-check if existing rendered video exists in out/
+        const statusRes = await fetch("/api/render/status");
+        if (statusRes.ok) {
+          const statusData = await statusRes.json();
+          if (statusData && statusData.status === "completed" && statusData.videoUrl) {
+            displayRenderedVideo(statusData.videoUrl, statusData.outFileName);
+          }
+        }
+      } catch (e) {
+        console.log("Belum ada skrip yang di-cache.");
+      }
+    }
+
+    function onNaskahEdited(index, newText) {
+      if (currentCachedScript && currentCachedScript.scenes && currentCachedScript.scenes[index]) {
+        currentCachedScript.scenes[index].voiceoverText = newText;
+        fetch("/api/script/update", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ script: currentCachedScript }),
+        }).then(() => {
+          console.log(`Naskah adegan #${index + 1} diperbarui.`);
+        }).catch(console.error);
+      }
+    }
+
+    function renderStoryboardCards(script) {
+      if (!script) return;
+      currentCachedScript = script;
+
+      const themePresetsInfo = {
+        "luxury-gold": { name: "Luxury Gold", color: "#F59E0B", dot: "#F59E0B" },
+        "cyber-neon": { name: "Cyber Neon", color: "#00F0FF", dot: "#00F0FF" },
+        "modern-dark": { name: "Modern Dark", color: "#10B981", dot: "#10B981" },
+        "clean-saas": { name: "Clean SaaS", color: "#6366F1", dot: "#6366F1" },
+        "sunset-flare": { name: "Sunset Flare", color: "#F43F5E", dot: "#F43F5E" },
+      };
+
+      const activeThemeKey = script.rules?.themePreset || currentThemePreset;
+      const themeInfo = themePresetsInfo[activeThemeKey] || { name: activeThemeKey, color: "#00F0FF", dot: "#00F0FF" };
+
+      // Sync active state on theme cards in left panel
+      document.querySelectorAll(".theme-card").forEach(c => {
+        c.classList.toggle("active", c.dataset.theme === activeThemeKey);
+      });
+      currentThemePreset = activeThemeKey;
+
+      document.getElementById("activeTitle").textContent = script.title || "Motion Graphic AI";
+      document.getElementById("chipFps").textContent = `${script.fps || 60} FPS Native`;
+      document.getElementById("chipTheme").innerHTML = `<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${themeInfo.dot};margin-right:4px;"></span> ${themeInfo.name}`;
+      document.getElementById("chipRatio").textContent = script.aspectRatio || currentAspectRatio;
+
+      const totalFrames = (script.scenes || []).reduce((acc, s) => acc + (s.durationInFrames || 180), 0);
+      const totalSec = (totalFrames / (script.fps || 60)).toFixed(1);
+      document.getElementById("chipDuration").textContent = `${totalFrames} Frames (~${totalSec}s)`;
+
+      const list = document.getElementById("timelineList");
+      list.innerHTML = "";
+
+      // 1. VALIDATION BANNER
+      const validationBanner = document.createElement("div");
+      validationBanner.className = "validation-banner";
+      const isCloned = Boolean(script.rules?.clonedVoice || script.rules?.voiceboxStatus === "cloned");
+      const isSampleAudio = Boolean(activeAudioData || script.rules?.masterAudioFile || activeAudioFilename);
+      const isVoiceboxOffline = script.rules?.voiceboxStatus === "offline";
+
+      let voiceSourceLabel = "AI Speech Narration";
+      if (isCloned) {
+        voiceSourceLabel = `✨ Voicebox Cloned Voice (${activeAudioFilename || 'Sample'})`;
+      } else if (isSampleAudio) {
+        voiceSourceLabel = `🎙️ Audio Sample (${activeAudioFilename || 'uploaded-sample.mp3'})`;
+      }
+
+      const langMap = {
+        id: "🇮🇩 Bahasa Indonesia",
+        ja: "🇯🇵 日本語",
+        en: "🇺🇸 English",
+      };
+      const langLabel = langMap[script.rules?.language || currentLanguage] || "🇮🇩 Bahasa Indonesia";
+
+      validationBanner.innerHTML = `
+        <div class="validation-banner-header">
+          <span class="validation-badge-title">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            Langkah Validasi: Naskah, Voiceover & Storyboard
+          </span>
+          <div class="validation-tags">
+            <span class="validation-tag-item"><span style="width:8px;height:8px;border-radius:50%;background:${themeInfo.color};display:inline-block;"></span> Palet: ${themeInfo.name}</span>
+            <span class="validation-tag-item">🌐 Bahasa: ${langLabel}</span>
+            <span class="validation-tag-item">📐 Rasio: ${script.aspectRatio || "16:9"}</span>
+            <span class="validation-tag-item">⚡ 60 FPS Locked</span>
+            <span class="validation-tag-item" style="color:var(--color-cyan);border-color:rgba(0,240,255,0.3);">${voiceSourceLabel}</span>
+          </div>
+        </div>
+        <div class="validation-desc">
+          Periksa keselarasan naskah dan suara per adegan di bawah ini sebelum me-render ke Remotion MP4. Anda dapat langsung mengedit naskah teks, mendengarkan suaranya, dan menekan tombol persetujuan di bawah.
+        </div>
+        ${isVoiceboxOffline && isSampleAudio ? `
+          <div style="margin-top:12px; padding:10px 14px; background:rgba(245, 158, 11, 0.1); border:1px solid rgba(245, 158, 11, 0.3); border-radius:8px; font-size:12px; color:#FDE68A; line-height:1.5;">
+            <strong>💡 Info Voicebox Voice Cloning:</strong> Server Voicebox (localhost:17493) sedang offline, sehingga audio sample asli digunakan langsung sebagai master audio track. Jika ingin AI Voicebox meng-kloning suara dari sample untuk membacakan naskah baru, jalankan server Voicebox di terminal: <code style="background:rgba(0,0,0,0.4); padding:2px 6px; border-radius:4px; font-family:monospace; color:#67E8F9;">python3 -m voicebox.main --port 17493</code>.
+          </div>
+        ` : ''}
+        ${isCloned ? `
+          <div style="margin-top:12px; padding:10px 14px; background:rgba(16, 185, 129, 0.12); border:1px solid rgba(16, 185, 129, 0.3); border-radius:8px; font-size:12px; color:#A7F3D0; line-height:1.5;">
+            <strong>✨ Voice Cloning Berhasil:</strong> Voicebox telah mengkloning timbre suara dari sample Anda dan membacakan naskah per adegan di bawah ini.
+          </div>
+        ` : ''}
+      `;
+      list.appendChild(validationBanner);
+
+      // 2. MASTER AUDIO PLAYER (Only shown if offline draft without cloned voices)
+      const hasClonedScenes = (script.scenes || []).some(s => Boolean(s.audioFile && !s.audioFile.includes("uploaded-sample") && s.audioFile.trim() !== ""));
+      if (!isCloned && !hasClonedScenes && script.rules?.masterAudioFile) {
+        const masterBox = document.createElement("div");
+        masterBox.className = "master-audio-box";
+        masterBox.style.marginBottom = "16px";
+        const cleanAudioSrc = `/${script.rules.masterAudioFile.replace(/^\/+/, '')}`;
+        masterBox.innerHTML = `
+          <div class="master-audio-title">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+            <span>Audio Voice Sample Aktif (${activeAudioFilename || 'uploaded-sample.mp3'}):</span>
+          </div>
+          <audio controls src="${cleanAudioSrc}" style="height:32px;"></audio>
+        `;
+        list.appendChild(masterBox);
+      }
+
+      // 3. SCENE STORYBOARD CARDS WITH EDITABLE NASKAH & AUDIO
+      (script.scenes || []).forEach((scene, index) => {
+        const card = document.createElement("div");
+        card.className = "timeline-card";
+
+        const durSec = ((scene.durationInFrames || 180) / 60).toFixed(1);
+        const heading = scene.headline || scene.title || scene.statLabel || `Adegan #${index + 1}`;
+        const isClonedAudio = Boolean(scene.audioFile && !scene.audioFile.includes("uploaded-sample") && scene.audioFile.trim() !== "");
+        const audioSrc = isClonedAudio ? `/${scene.audioFile.replace(/^\/+/, "")}` : null;
+
+        card.innerHTML = `
+          <div class="card-meta-col">
+            <span class="scene-pill">${scene.type}</span>
+            <span class="scene-frame-count">${scene.durationInFrames || 180}f • ~${durSec}s</span>
+          </div>
+          <div class="card-body-col" style="flex:1;">
+            <div class="scene-title-text">${heading}</div>
+            <div style="margin-top: 6px;">
+              <label style="font-size:11px; font-weight:700; color:#F59E0B; display:flex; align-items:center; gap:4px; margin-bottom:2px;">
+                <span>✍️ Naskah Narasi (Edit teks jika ingin diubah):</span>
+              </label>
+              <textarea class="scene-naskah-textarea" rows="2" onchange="onNaskahEdited(${index}, this.value)">${voiceover}</textarea>
+            </div>
+          </div>
+          <div style="margin-left: 12px; align-self: center; display: flex; flex-direction: column; gap: 6px; align-items: center;">
+            ${audioSrc ? `
+              <button type="button" class="btn-audio-play" title="Dengarkan Suara Adegan Ini" onclick="playSceneAudio('${audioSrc}')">
+                <svg class="icon" style="width:16px;height:16px" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              </button>
+              <button type="button" class="btn-studio-link" style="padding: 3px 8px; font-size: 10px; min-height: 22px; color: var(--color-text-faint); border-color: rgba(255,255,255,0.1);" title="Generate Ulang Suara Adegan Ini" onclick="generateSingleSceneVoice(${index}, this)">
+                🔄 Re-gen
+              </button>
+            ` : `
+              <button type="button" class="btn-studio-link" style="padding: 6px 12px; font-size: 11px; min-height: 32px; background: rgba(0, 240, 255, 0.12); border-color: rgba(0, 240, 255, 0.35); color: var(--color-cyan); white-space: nowrap;" onclick="generateSingleSceneVoice(${index}, this)">
+                <svg class="icon" style="width:13px;height:13px" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
+                <span>🎙️ Buat Suara</span>
+              </button>
+            `}
+          </div>
+        `;
+        list.appendChild(card);
+      });
+
+      // 4. VALIDATION APPROVAL CTA BOX
+      const ctaBox = document.createElement("div");
+      ctaBox.className = "validation-cta-box";
+      ctaBox.innerHTML = `
+        <div class="validation-cta-info">
+          <h4>Naskah & Voiceover Sudah Sesuai?</h4>
+          <p>Jika naskah teks baru saja Anda edit, atau jika suara sebelumnya gagal di-generate, klik "Resume Voiceover". Jika sudah cocok, klik tombol render untuk menghasilkan MP4 60 FPS.</p>
+        </div>
+        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+          <button type="button" class="btn-studio-link" id="btnRetryVoiceover" onclick="retryVoiceoverSynthesis()" style="background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.4); color: #C7D2FE; font-weight: 600; padding: 10px 16px;">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
+            <span id="labelRetryVoice">🎙️ Resume / Buat Ulang Voiceover AI</span>
+          </button>
+          <button type="button" class="btn-approve-render" id="btnApproveAndRender" onclick="renderVideoToMp4()">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"></path><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+            <span>✅ Validasi Cocok — Render Video (60 FPS)</span>
+          </button>
+        </div>
+      `;
+      list.appendChild(ctaBox);
+    }
+
+    let globalAudioPlayer = null;
+    function playSceneAudio(src) {
+      if (globalAudioPlayer) {
+        globalAudioPlayer.pause();
+      }
+      globalAudioPlayer = new Audio(src);
+      globalAudioPlayer.play();
+    }
+
+    function switchPreviewTab(tab) {
+      const tabMp4 = document.getElementById("tabMp4Player");
+      const tabStudio = document.getElementById("tabRemotionStudio");
+      const wrapMp4 = document.getElementById("mp4PlayerWrap");
+      const wrapStudio = document.getElementById("studioIframeWrap");
+
+      if (tab === "mp4") {
+        tabMp4.classList.add("active");
+        tabStudio.classList.remove("active");
+        wrapMp4.style.display = "flex";
+        wrapStudio.style.display = "none";
+      } else {
+        tabStudio.classList.add("active");
+        tabMp4.classList.remove("active");
+        wrapStudio.style.display = "flex";
+        wrapMp4.style.display = "none";
+        // Reload iframe to refresh remotion studio state
+        const iframe = document.getElementById("remotionIframe");
+        if (iframe) iframe.src = iframe.src;
+      }
+    }
+
+    let isRenderingMp4 = false;
+    let renderPollInterval = null;
+
+    async function renderVideoToMp4() {
+      if (isRenderingMp4) {
+        alert("Render sedang berlangsung, silakan tunggu...");
+        return;
+      }
+
+      const btn = document.getElementById("btnRenderMp4");
+      const label = document.getElementById("renderBtnLabel");
+
+      isRenderingMp4 = true;
+      btn.disabled = true;
+      label.textContent = "⏳ Merender MP4 (60 FPS)...";
+
+      switchPreviewTab("mp4");
+      document.getElementById("mp4EmptyNotice").innerHTML = `
+        <div class="circular-loader" style="margin: 0 auto 16px auto;"></div>
+        <p style="font-weight: 700; color: #fff; margin-bottom: 6px;">Sedang Merender Video MP4 pada 60 FPS...</p>
+        <p style="font-size: 12px; color: var(--color-cyan);">Remotion sedang meng-encode frame grafis & audio. Biasanya butuh 15-30 detik.</p>
+      `;
+
+      try {
+        const res = await fetch("/api/render", { method: "POST" });
+        const data = await res.json();
+
+        // Start polling status
+        renderPollInterval = setInterval(async () => {
+          try {
+            const statusRes = await fetch("/api/render/status");
+            const statusData = await statusRes.json();
+
+            if (statusData.status === "completed") {
+              clearInterval(renderPollInterval);
+              isRenderingMp4 = false;
+              btn.disabled = false;
+              label.textContent = "Render Ulang MP4";
+
+              displayRenderedVideo(statusData.videoUrl, statusData.outFileName);
+            } else if (statusData.status === "error") {
+              clearInterval(renderPollInterval);
+              isRenderingMp4 = false;
+              btn.disabled = false;
+              label.textContent = "Coba Render Lagi";
+              alert("Gagal merender MP4: " + (statusData.error || "Unknown error"));
+            }
+          } catch (e) {
+            console.error("Polling error:", e);
+          }
+        }, 1500);
+
+      } catch (err) {
+        isRenderingMp4 = false;
+        btn.disabled = false;
+        label.textContent = "Render ke MP4 60 FPS";
+        alert("Gagal memulai render: " + err.message);
+      }
+    }
+
+    function displayRenderedVideo(url, filename) {
+      document.getElementById("mp4EmptyNotice").style.display = "none";
+      const box = document.getElementById("mp4VideoBox");
+      const video = document.getElementById("renderedVideoElement");
+      const downloadBtn = document.getElementById("btnDownloadMp4");
+      const meta = document.getElementById("renderedMetaText");
+
+      video.src = url;
+      downloadBtn.href = url;
+      if (filename) downloadBtn.download = filename;
+      meta.textContent = `✅ Video MP4 60 FPS (${filename || "out.mp4"})`;
+      box.style.display = "block";
+      video.play().catch(() => {});
+    }
+
+    // Auto-check if previously rendered video exists
+    window.addEventListener("load", async () => {
+      try {
+        const res = await fetch("/api/render/status");
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.status === "completed" && data.videoUrl) {
+            displayRenderedVideo(data.videoUrl, data.outFileName);
+          }
+        }
+      } catch (e) {}
+    });
+  </script>
+</body>
+</html>

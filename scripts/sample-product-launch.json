@@ -1,0 +1,96 @@
+{
+  "title": "QuantumFlow AI Launch",
+  "aspectRatio": "16:9",
+  "rules": {
+    "fps": 60,
+    "themePreset": "cyber-neon",
+    "fontFamily": "Outfit",
+    "physics": "bouncy",
+    "backgroundStyle": "grid-mesh",
+    "glowIntensity": 0.85
+  },
+  "scenes": [
+    {
+      "type": "intro",
+      "id": "s1-intro",
+      "durationInSeconds": 3.5,
+      "transition": "slide",
+      "badgeText": "VERSION 3.0 RELEASE",
+      "headline": "QuantumFlow AI Engine",
+      "highlightWord": "QuantumFlow",
+      "subheadline": "The next-generation distributed inference pipeline for real-time generative agents.",
+      "icon": "Zap"
+    },
+    {
+      "type": "kinetic-text",
+      "id": "s2-kinetic",
+      "durationInSeconds": 3.0,
+      "transition": "slide",
+      "badgeText": "VELOCITY REDEFINED",
+      "headline": "Instant Latency. Infinite Scale.",
+      "highlightWords": ["Instant", "Infinite"],
+      "body": "Zero cold-starts. Sub-10ms response times. Engineered directly on edge GPUs."
+    },
+    {
+      "type": "metrics",
+      "id": "s3-metrics",
+      "durationInSeconds": 4.0,
+      "transition": "slide",
+      "badgeText": "BENCHMARK METRICS",
+      "headline": "Unmatched Throughput",
+      "subheadline": "Stress-tested across 50,000 concurrent streaming connections globally.",
+      "metrics": [
+        { "value": 60, "suffix": " FPS", "label": "Smooth Playback", "trend": "Locked Rate" },
+        { "value": 15, "suffix": "x", "label": "Higher Concurrency", "trend": "+1500%" },
+        { "value": 99.99, "suffix": "%", "label": "High Availability", "trend": "Zero Outages" }
+      ]
+    },
+    {
+      "type": "feature-grid",
+      "id": "s4-features",
+      "durationInSeconds": 4.0,
+      "transition": "slide",
+      "badgeText": "ARCHITECTURE",
+      "headline": "Everything Built For Production",
+      "subheadline": "Designed from the kernel up to eliminate latency bottlenecks.",
+      "features": [
+        {
+          "icon": "Cpu",
+          "title": "Edge Acceleration",
+          "description": "Distributes weights across nearest GPU clusters automatically.",
+          "tag": "Kernel"
+        },
+        {
+          "icon": "Shield",
+          "title": "Zero-Trust Mesh",
+          "description": "End-to-end cryptographic sealing for every token stream.",
+          "tag": "Secure"
+        },
+        {
+          "icon": "Gauge",
+          "title": "Adaptive Autoscaling",
+          "description": "Spins nodes up and down in 250 milliseconds with zero waste.",
+          "tag": "Efficient"
+        },
+        {
+          "icon": "Terminal",
+          "title": "SDK & CLI Native",
+          "description": "Deploy with a single command or integrate with TypeScript in 3 lines.",
+          "tag": "Developer"
+        }
+      ]
+    },
+    {
+      "type": "outro",
+      "id": "s5-outro",
+      "durationInSeconds": 3.5,
+      "transition": "fade",
+      "badgeText": "DEPLOY TODAY",
+      "headline": "Start Building With QuantumFlow",
+      "subheadline": "Available now on npm, Docker, and managed cloud clusters.",
+      "ctaText": "quantumflow.dev/start",
+      "url": "quantumflow.dev",
+      "socials": ["@quantumflow", "github.com/quantumflow", "60 FPS"]
+    }
+  ]
+}

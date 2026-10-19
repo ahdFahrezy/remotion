@@ -1,0 +1,11 @@
+node_modules/
+**/node_modules/
+out/
+.DS_Store
+*.log
+.remotion/
+.env
+.env.local
+voicebox/data/
+**/__pycache__/
+*.pyc

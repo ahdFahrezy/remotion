@@ -1,0 +1,53 @@
+{
+  "name": "remotion-motion-generator",
+  "version": "1.0.0",
+  "description": "Dynamic Motion Graphics Generator powered by Remotion (60 FPS)",
+  "repository": {},
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "private": true,
+  "dependencies": {
+    "@google/genai": "^2.30.0",
+    "@remotion/cli": "4.0.536",
+    "@remotion/google-fonts": "4.0.536",
+    "@remotion/paths": "4.0.536",
+    "@remotion/shapes": "4.0.536",
+    "@remotion/transitions": "4.0.536",
+    "@remotion/zod-types": "4.0.536",
+    "dotenv": "^18.0.8",
+    "lucide-react": "0.555.0",
+    "music-metadata": "^12.2.3",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "remotion": "4.0.536",
+    "zod": "^4.5.4"
+  },
+  "devDependencies": {
+    "@remotion/eslint-config-flat": "4.0.536",
+    "@types/node": "20.12.14",
+    "@types/react": "19.2.7",
+    "@types/web": "0.0.166",
+    "eslint": "10.12.0",
+    "prettier": "3.8.1",
+    "typescript": "5.9.3"
+  },
+  "scripts": {
+    "dev": "remotion studio",
+    "start": "remotion studio",
+    "build": "remotion bundle",
+    "render": "remotion render src/index.ts MotionGraphic out/motion-graphic.mp4",
+    "ai": "node scripts/ai-generate.mjs",
+    "ai:render": "node scripts/ai-generate.mjs --render",
+    "ui": "node scripts/web-server.mjs",
+    "models": "node scripts/ai-generate.mjs --models",
+    "voicebox:start": "python3 -m voicebox.main --port 17493",
+    "render:ai": "remotion render src/index.ts MotionGraphic out/ai-generated-60fps.mp4 --props=scripts/latest-generated-script.json",
+    "render:launch": "remotion render src/index.ts MotionGraphic out/product-launch.mp4 --props=scripts/sample-product-launch.json",
+    "render:metrics": "remotion render src/index.ts MotionGraphic out/growth-metrics.mp4 --props=scripts/sample-metrics-growth.json",
+    "render:kinetic": "remotion render src/index.ts MotionGraphic out/kinetic-typography.mp4 --props=scripts/sample-kinetic-typography.json",
+    "render:vertical": "remotion render src/index.ts MotionGraphic out/vertical-reels.mp4 --props=scripts/sample-vertical-reels.json",
+    "lint": "tsc"
+  }
+}

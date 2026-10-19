@@ -1,0 +1,61 @@
+{
+  "title": "Viral 60FPS Reel Promo",
+  "aspectRatio": "9:16",
+  "rules": {
+    "fps": 60,
+    "themePreset": "luxury-gold",
+    "fontFamily": "Outfit",
+    "physics": "bouncy",
+    "backgroundStyle": "grid-mesh",
+    "glowIntensity": 0.8
+  },
+  "scenes": [
+    {
+      "type": "intro",
+      "id": "reel-intro",
+      "durationInSeconds": 3.0,
+      "transition": "slide",
+      "badgeText": "SECRET WEAPON",
+      "headline": "Stop Editing Videos By Hand",
+      "highlightWord": "Stop",
+      "subheadline": "The AI & code workflow top content teams use to generate 100+ videos every week.",
+      "icon": "Flame"
+    },
+    {
+      "type": "kinetic-text",
+      "id": "reel-kinetic",
+      "durationInSeconds": 2.5,
+      "transition": "slide",
+      "badgeText": "THE CHEAT CODE",
+      "headline": "Input Script. Output 60 FPS.",
+      "highlightWords": ["Script.", "60", "FPS."],
+      "body": "No Premiere. No After Effects crashes. Just clean code and instant rendering."
+    },
+    {
+      "type": "metrics",
+      "id": "reel-metrics",
+      "durationInSeconds": 3.5,
+      "transition": "slide",
+      "badgeText": "VIRAL PROOF",
+      "headline": "Massive Reach Multiplier",
+      "subheadline": "Content generated at 60 FPS retains viewers 3.2x longer than static posts.",
+      "metrics": [
+        { "value": 60, "suffix": " FPS", "label": "Retention Boost", "trend": "Ultra Crisp" },
+        { "value": 3.2, "suffix": "x", "label": "Watch Time", "trend": "+220%" },
+        { "value": 10, "suffix": " Min", "label": "Production Time", "trend": "Instant" }
+      ]
+    },
+    {
+      "type": "outro",
+      "id": "reel-outro",
+      "durationInSeconds": 3.0,
+      "transition": "fade",
+      "badgeText": "GET THE CODE",
+      "headline": "Comment REMOTION Below",
+      "subheadline": "We will DM you the entire starter repo and video generator template.",
+      "ctaText": "Link In Bio",
+      "url": "@remotion_creator",
+      "socials": ["Save this post", "Share with a dev"]
+    }
+  ]
+}

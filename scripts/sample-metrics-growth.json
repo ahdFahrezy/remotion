@@ -1,0 +1,91 @@
+{
+  "title": "Q4 HyperGrowth Report",
+  "aspectRatio": "16:9",
+  "rules": {
+    "fps": 60,
+    "themePreset": "modern-dark",
+    "fontFamily": "PlusJakartaSans",
+    "physics": "smooth",
+    "backgroundStyle": "particles",
+    "glowIntensity": 0.65
+  },
+  "scenes": [
+    {
+      "type": "intro",
+      "id": "intro",
+      "durationInSeconds": 3.5,
+      "transition": "slide",
+      "badgeText": "QUARTERLY PERFORMANCE",
+      "headline": "Q4 Growth Acceleration",
+      "highlightWord": "Acceleration",
+      "subheadline": "Record-breaking expansion across enterprise customer segments and revenue streams.",
+      "icon": "TrendingUp"
+    },
+    {
+      "type": "metrics",
+      "id": "key-numbers",
+      "durationInSeconds": 4.5,
+      "transition": "slide",
+      "badgeText": "RECORD EXPANSION",
+      "headline": "Financial Milestones Reached",
+      "subheadline": "Surpassing annual targets four months ahead of strategic timeline.",
+      "metrics": [
+        { "value": 4.8, "prefix": "$", "suffix": "M", "label": "ARR Added in Q4", "trend": "+185% YoY" },
+        { "value": 142, "suffix": "%", "label": "Net Dollar Retention", "trend": "Top 1% SaaS" },
+        { "value": 850, "suffix": "k+", "label": "Monthly Active Users", "trend": "Hyper Viral" }
+      ]
+    },
+    {
+      "type": "comparison",
+      "id": "comparison",
+      "durationInSeconds": 4.0,
+      "transition": "slide",
+      "badgeText": "MARKET SHIFT",
+      "headline": "Displacing Legacy Software",
+      "subheadline": "Why Fortune 500 engineering teams are consolidating into our unified platform.",
+      "left": {
+        "title": "Legacy Monoliths",
+        "status": "negative",
+        "items": [
+          "12-month complex migration cycles",
+          "Fragmented data silos across teams",
+          "Prohibitive per-seat licensing fees",
+          "Slow quarterly release schedules"
+        ]
+      },
+      "right": {
+        "title": "Our Unified Platform",
+        "status": "positive",
+        "items": [
+          "Live in under 48 hours",
+          "Zero-copy shared data layer",
+          "Transparent usage-based pricing",
+          "Daily automated zero-downtime updates"
+        ]
+      }
+    },
+    {
+      "type": "quote",
+      "id": "quote",
+      "durationInSeconds": 3.5,
+      "transition": "fade",
+      "badgeText": "ENTERPRISE VALIDATION",
+      "quote": "“Switching to this architecture saved our infrastructure budget $1.2M in the first quarter alone.”",
+      "author": "Marcus Vance",
+      "role": "CTO @ CloudApex Global",
+      "rating": 5
+    },
+    {
+      "type": "outro",
+      "id": "outro",
+      "durationInSeconds": 3.5,
+      "transition": "fade",
+      "badgeText": "INVESTOR BRIEFING",
+      "headline": "Join Our Journey to Series B",
+      "subheadline": "Full audited financial statements and data room available for accredited partners.",
+      "ctaText": "investor.hypergrowth.com",
+      "url": "hypergrowth.com",
+      "socials": ["@hypergrowth", "NASDAQ: HYPR Target"]
+    }
+  ]
+}

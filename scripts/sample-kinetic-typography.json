@@ -1,0 +1,60 @@
+{
+  "title": "Creative Kinetic Manifesto",
+  "aspectRatio": "16:9",
+  "rules": {
+    "fps": 60,
+    "themePreset": "sunset-flare",
+    "fontFamily": "SpaceGrotesk",
+    "physics": "snappy",
+    "backgroundStyle": "cyber-grid",
+    "glowIntensity": 0.8
+  },
+  "scenes": [
+    {
+      "type": "kinetic-text",
+      "id": "line-1",
+      "durationInSeconds": 3.0,
+      "transition": "wipe",
+      "badgeText": "THE MANIFESTO",
+      "headline": "Code Is The New Canvas",
+      "highlightWords": ["Code", "Canvas"],
+      "body": "When developers and motion designers unite, impossible visual ideas become software."
+    },
+    {
+      "type": "kinetic-text",
+      "id": "line-2",
+      "durationInSeconds": 3.0,
+      "transition": "slide",
+      "badgeText": "PRECISION IN MOTION",
+      "headline": "Sixty Frames Per Second",
+      "highlightWords": ["Sixty", "Second"],
+      "body": "Every bezier curve mathematically computed. Every transition synchronized to the millisecond."
+    },
+    {
+      "type": "metrics",
+      "id": "numbers",
+      "durationInSeconds": 3.5,
+      "transition": "slide",
+      "badgeText": "CREATIVE VOLUME",
+      "headline": "Scale Without Limits",
+      "subheadline": "One dynamic template powers infinite personalized variations.",
+      "metrics": [
+        { "value": 100, "suffix": "%", "label": "Programmatic Control", "trend": "Zero Limits" },
+        { "value": 60, "suffix": " FPS", "label": "Smooth Motion", "trend": "Rock Solid" },
+        { "value": 1, "suffix": "s", "label": "Iteration Cycle", "trend": "Real Time" }
+      ]
+    },
+    {
+      "type": "outro",
+      "id": "call-to-action",
+      "durationInSeconds": 3.5,
+      "transition": "fade",
+      "badgeText": "START CREATING",
+      "headline": "Build Motion With React",
+      "subheadline": "Discover the revolutionary power of Remotion motion graphics today.",
+      "ctaText": "remotion.dev/learn",
+      "url": "remotion.dev",
+      "socials": ["#remotion", "@remotion", "60 FPS"]
+    }
+  ]
+}
